@@ -1,3 +1,5 @@
 ALERTA: PRODUCTOS CON BAJO STOCK
 ================================
-Total de productos con bajo stock: 0
+ID: 003 | Cuaderno A4 | Stock actual: 5 unidades
+ID: 005 | Teclado Mecánico | Stock actual: 8 unidades
+Total de productos con bajo stock: 2

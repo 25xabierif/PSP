@@ -3,3 +3,4 @@ ID,Nombre,Categoría,Precio,Stock
 002,Mouse Inalámbrico,Electrónicos,25.50,45
 003,Cuaderno A4,Papelería,3.75,120
 004,Bolígrafo Azul,Papelería,1.25,200
+005,Teclado Mecánico,Electrónicos,89.99,8

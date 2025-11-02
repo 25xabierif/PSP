@@ -1,5 +1,6 @@
 ID,Nombre,Categoría,Precio,Stock
-001,Laptop HP,Electrónicos,599.99,14
-002,Mouse Inalámbrico,Electrónicos,25.50,55
-003,Cuaderno A4,Papelería,3.75,115
+001,Laptop HP,Electrónicos,599.99,10
+002,Mouse Inalámbrico,Electrónicos,25.50,65
+003,Cuaderno A4,Papelería,3.75,5
 004,Bolígrafo Azul,Papelería,1.25,200
+005,Teclado Mecánico,Electrónicos,89.99,8

@@ -9,7 +9,6 @@ import (
 	"strconv"
 )
 
-// --- Estructuras ---
 type Producto struct {
 	ID        string
 	Nombre    string
@@ -33,9 +32,6 @@ func (t Transaccion) String() string {
 	return fmt.Sprintf("%s,%s,%d,%s", t.Tipo, t.IDProducto, t.Cantidad, t.Fecha)
 }
 
-// --- Funciones requeridas ---
-
-// leerInventario lee el inventario desde un CSV y devuelve slice de Producto
 func leerInventario(nombreArchivo string) ([]Producto, error) {
 	f, err := os.Open(nombreArchivo)
 	if err != nil {
@@ -51,7 +47,6 @@ func leerInventario(nombreArchivo string) ([]Producto, error) {
 
 	var productos []Producto
 	for i, rec := range records {
-		// saltar cabecera
 		if i == 0 {
 			continue
 		}
@@ -78,7 +73,6 @@ func leerInventario(nombreArchivo string) ([]Producto, error) {
 	return productos, nil
 }
 
-// leerTransacciones lee las transacciones desde CSV y devuelve slice de Transaccion
 func leerTransacciones(nombreArchivo string) ([]Transaccion, error) {
 	f, err := os.Open(nombreArchivo)
 	if err != nil {
@@ -94,7 +88,6 @@ func leerTransacciones(nombreArchivo string) ([]Transaccion, error) {
 
 	var trans []Transaccion
 	for i, rec := range records {
-		// saltar cabecera
 		if i == 0 {
 			continue
 		}
@@ -116,12 +109,9 @@ func leerTransacciones(nombreArchivo string) ([]Transaccion, error) {
 	return trans, nil
 }
 
-// procesarTransacciones procesa las transacciones sobre los productos.
-// Devuelve una lista de mensajes de error (strings) que no pudieron aplicarse.
 func procesarTransacciones(productos []Producto, transacciones []Transaccion) []string {
 	var errores []string
 
-	// índice rápido por ID (posición en slice)
 	index := make(map[string]int)
 	for i, p := range productos {
 		index[p.ID] = i
@@ -151,12 +141,9 @@ func procesarTransacciones(productos []Producto, transacciones []Transaccion) []
 		}
 	}
 
-	// Nota: la slice 'productos' se modifica in-place porque es una referencia a backing array,
-	// pero si quieres devolverla puedes hacerlo. En este enunciado solo pedían errores.
 	return errores
 }
 
-// escribirInventario escribe el inventario en formato CSV al archivo indicado.
 func escribirInventario(productos []Producto, nombreArchivo string) error {
 	f, err := os.Create(nombreArchivo)
 	if err != nil {
@@ -167,7 +154,6 @@ func escribirInventario(productos []Producto, nombreArchivo string) error {
 	writer := csv.NewWriter(f)
 	defer writer.Flush()
 
-	// cabecera
 	if err := writer.Write([]string{"ID", "Nombre", "Categoría", "Precio", "Stock"}); err != nil {
 		return fmt.Errorf("error escribiendo cabecera: %w", err)
 	}
@@ -187,7 +173,6 @@ func escribirInventario(productos []Producto, nombreArchivo string) error {
 	return nil
 }
 
-// generarReporteBajoStock escribe un archivo con los productos cuyo stock < limite.
 func generarReporteBajoStock(productos []Producto, limite int) error {
 	nombre := "productos_bajo_stock.txt"
 	f, err := os.Create(nombre)
@@ -211,9 +196,8 @@ func generarReporteBajoStock(productos []Producto, limite int) error {
 	return nil
 }
 
-// escribirLog escribe los errores en un archivo de log usando log.SetOutput y también devuelve error si falla
 func escribirLog(errores []string, nombreArchivo string) error {
-	// asegurarnos de crear directorio si hace falta
+
 	dir := filepath.Dir(nombreArchivo)
 	if dir != "." {
 		_ = os.MkdirAll(dir, 0755)
@@ -225,19 +209,16 @@ func escribirLog(errores []string, nombreArchivo string) error {
 	}
 	defer f.Close()
 
-	// redirigimos log a ese fichero
 	log.SetOutput(f)
-	log.SetFlags(log.LstdFlags) // incluir timestamp
+	log.SetFlags(log.LstdFlags)
 
 	for _, e := range errores {
-		// añadimos prefijo ERROR para coherencia con enunciado
 		log.Println("[ERROR]:", e)
 	}
 
 	return nil
 }
 
-// --- main: orquestador ---
 func main() {
 	invFile := "inventario.txt"
 	transFile := "transacciones.txt"
@@ -277,7 +258,6 @@ func main() {
 		return
 	}
 
-	// resumen por consola
 	fmt.Println("Proceso completado.")
 	fmt.Println("Inventario actualizado -> inventario_actualizado.txt")
 	fmt.Println("Reporte bajo stock -> productos_bajo_stock.txt")

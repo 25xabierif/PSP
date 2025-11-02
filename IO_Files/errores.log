@@ -1,0 +1,2 @@
+2025/11/02 22:57:07 [ERROR]: ERROR: Producto 999 no encontrado en transacción de tipo VENTA (fecha: 2025-10-06)
+2025/11/02 22:57:08 [ERROR]: ERROR: Stock insuficiente para venta. Producto: 005, Stock actual: 8, Cantidad solicitada: 15 (fecha: 2025-10-06)
